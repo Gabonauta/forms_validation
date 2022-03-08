@@ -7,7 +7,7 @@ import 'package:forms_validation/widgets/auth_background.dart';
 import 'package:forms_validation/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatelessWidget {
+class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +25,7 @@ class LoginScreen extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    'Ingreso',
+                    'Registro',
                     style: Theme.of(context).textTheme.headline4,
                   ),
                   ChangeNotifierProvider(
@@ -47,10 +47,9 @@ class LoginScreen extends StatelessWidget {
                   StadiumBorder(),
                 ),
               ),
-              onPressed: () =>
-                  Navigator.pushReplacementNamed(context, 'register'),
+              onPressed: () => Navigator.pushReplacementNamed(context, 'login'),
               child: Text(
-                'Crear una nueva cuenta',
+                'Ya tengo una cuenta',
                 style: TextStyle(fontSize: 18, color: Colors.black87),
               ),
             ),
@@ -124,13 +123,12 @@ class _LoginForm extends StatelessWidget {
                       FocusScope.of(context).unfocus();
                       await Future.delayed(Duration(seconds: 2));
                       loginForm.isLoading = true;
-                      final String? token = await authService.login(
+                      final String? token = await authService.createUser(
                           loginForm.email, loginForm.password);
                       if (token == null) {
                         Navigator.pushReplacementNamed(context, 'home');
                       } else {
                         print(token);
-                        NotificationsService.showSnackBar(token);
                         loginForm.isLoading = false;
                       }
                     },

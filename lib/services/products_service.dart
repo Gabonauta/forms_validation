@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:forms_validation/models/models.dart';
 import 'package:http/http.dart' as http;
 
@@ -11,6 +12,7 @@ class ProductsService extends ChangeNotifier {
   bool isSaving = false;
   late Product selectedProduct;
   File? newPictureFile;
+  final storage = new FlutterSecureStorage();
 
   ProductsService() {
     this.loadProducts();
@@ -18,7 +20,8 @@ class ProductsService extends ChangeNotifier {
   Future loadProducts() async {
     this.isLoading = true;
     notifyListeners();
-    final url = Uri.https(_baseUrl, 'products.json');
+    final url = Uri.https(_baseUrl, 'products.json',
+        {'auth': await storage.read(key: 'token') ?? ''});
     final resp = await http.get(url);
     final Map<String, dynamic> productsMap = json.decode(resp.body);
     productsMap.forEach((key, value) {
