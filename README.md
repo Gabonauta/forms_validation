@@ -1,6 +1,12 @@
 # forms_validation
 
-A new Flutter project.
+Flutter project customised for Andriod and IOS.
+Features:
+- SignIn/LogIn
+- Shop of products
+- CRUD product form
+- Cart
+- Provider
 
 ## Getting Started
 
